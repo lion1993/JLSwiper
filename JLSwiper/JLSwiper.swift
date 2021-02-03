@@ -50,7 +50,7 @@ class JLSwiper: UIScrollView, UIScrollViewDelegate {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        let index = Int( scrollView.contentOffset.x / (ScreenWidth-60) )
+        let index = Int( scrollView.contentOffset.x / (JLWidth-60) )
         if index == currentIdx {return}
         //下标
         lastIdx = currentIdx
@@ -58,12 +58,12 @@ class JLSwiper: UIScrollView, UIScrollViewDelegate {
         //循环
         let imagesCount = swiperDataSource?.swiperImages().count
         if currentIdx == 0 {
-            scrollView.setContentOffset(CGPoint(x: (ScreenWidth-60)*CGFloat((swiperDataSource?.swiperImages().count)!-2), y: 0), animated: false)
+            scrollView.setContentOffset(CGPoint(x: (JLWidth-60)*CGFloat((swiperDataSource?.swiperImages().count)!-2), y: 0), animated: false)
             self.imageViews[currentIdx!].transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
             currentIdx = imagesCount!-2
             lastIdx = imagesCount!-1
         } else if currentIdx == imagesCount!-1 {
-            scrollView.setContentOffset(CGPoint(x: (ScreenWidth-60), y: 0), animated: false)
+            scrollView.setContentOffset(CGPoint(x: (JLWidth-60), y: 0), animated: false)
             self.imageViews[currentIdx!].transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
             currentIdx = 1
             lastIdx = 0
