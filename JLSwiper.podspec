@@ -20,6 +20,6 @@ Pod::Spec.new do |spec|
 
   spec.source_files  = "JLSwiper/**/*.{h,m,swift}"
 
-  spec.dependency "Kingfinsher"
+  spec.dependency "Kingfisher"
 
 end
