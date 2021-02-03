@@ -1,20 +1,25 @@
-Pod::Spec.new do |s|
 
-s.name = "JLSwiper"
-s.version = "1.0.0"
-s.author = "lion"
-s.license = "MIT"
-s.homepage = "https://github.com/lion1993/JLSwiper"
-s.summary = "swiper"
-s.description = "swiper"
 
-s.source = { :git => "https://github.com/lion1993/JLSwiper.git", :tag => s.version }
-s.source_files = "JLSwiper/*.{h,swift}"
+Pod::Spec.new do |spec|
 
-s.ios.deployment_target = "10.0"
-s.frameworks = "UIKit"
+  spec.name         = "JLSwiper"
 
-s.dependency "Kingfisher"
+  spec.version      = "1.0.0"
+
+  spec.summary      = "A short description of JLSwiper."
+
+  spec.description  = "swiper"
+
+  spec.homepage     = "http://github.com/lion1993/JLSwiper"
+
+  spec.license      = "MIT"
+
+  spec.author       = { "吕晶晶" => "1160861008@qq.com" }
+
+  spec.source  = { :git => "http://github.com/lion1993/JLSwiper.git", :tag => "#{spec.version}" }
+
+  spec.source_files  = "JLSwiper/**/*.{h,m,swift}"
+
+  spec.dependency "Kingfinsher"
 
 end
-
