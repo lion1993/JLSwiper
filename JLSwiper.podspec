@@ -4,7 +4,7 @@ Pod::Spec.new do |spec|
 
   spec.name         = "JLSwiper"
 
-  spec.version      = "1.0.1"
+  spec.version      = "1.0.2"
 
   spec.summary      = "JLSwiper."
 
@@ -17,8 +17,8 @@ Pod::Spec.new do |spec|
   spec.author       = { "吕晶晶" => "1160861008@qq.com" }
 
   spec.ios.deployment_target = "10.0"
+  spec.swift_version = "5.0"
 
-  spec.swift_version = "4.0"
 
   spec.source  = { :git => "http://github.com/lion1993/JLSwiper.git", :tag => "#{spec.version}" }
 
