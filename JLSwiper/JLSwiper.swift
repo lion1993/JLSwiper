@@ -9,33 +9,37 @@ import Kingfisher
 
 let JLWidth = UIScreen.main.bounds.width
 
-class JLSwiper: UIScrollView, UIScrollViewDelegate {
+public class JLSwiper: UIScrollView, UIScrollViewDelegate {
     
-    var swiperDataSource: JLSwiperDataSource?
-    var swiperDelegate: JLSwiperDelegate?
+    public var swiperDataSource: JLSwiperDataSource?
+    public var swiperDelegate: JLSwiperDelegate?
     private var imageViews: [UIImageView] = []
-    private var currentIdx: Int?
-    private var lastIdx : Int?
+    private var images : [String] = []
+    private var itemWidth : CGFloat = 0
+    private var currentIdx: Int = 1
+    private var lastIdx : Int = 0
     
-    func initSwiper(with dataSource: JLSwiperDataSource, delegate: JLSwiperDelegate) {
+    public func initSwiper(with frame: CGRect, dataSource: JLSwiperDataSource, delegate: JLSwiperDelegate) -> JLSwiper {
         
-        let swiper = UIScrollView()
-        swiper.showsHorizontalScrollIndicator = false
-        swiper.isPagingEnabled = true
-        swiper.delegate = self
-        swiper.clipsToBounds = false
+        self.frame = frame
+        self.swiperDataSource = dataSource;
+        self.swiperDelegate = delegate;
+        self.showsHorizontalScrollIndicator = false
+        self.isPagingEnabled = true
+        self.delegate = self
+        self.clipsToBounds = false
         
-        var source = dataSource.swiperImages()
-        source.insert(source.last!, at: 0)
-        source.append(source[1])
+        images = dataSource.swiperImages()
+        images.insert(images.last!, at: 0)
+        images.append(images[1])
         
-        let itemWith = JLWidth - dataSource.margin!*2
-        let imgsCount = CGFloat(dataSource.swiperImages().count + 2)
-        swiper.contentSize = CGSize(width: itemWith * imgsCount, height: 0)
-        for (index, item) in source.enumerated() {
-            let imgView = UIImageView.init(frame: CGRect(x: itemWith * CGFloat(index), y: 0, width: itemWith, height: self.frame.height))
+        itemWidth = JLWidth - dataSource.margin!*2
+        self.contentSize = CGSize(width: itemWidth * CGFloat(images.count), height: 0)
+        for (index, item) in images.enumerated() {
+            let imgView = UIImageView.init(frame: CGRect(x: itemWidth * CGFloat(index), y: 0, width: itemWidth, height: self.frame.height))
             imgView.kf.setImage(with: URL.init(string: item))
             imageViews.append(imgView)
+            self.addSubview(imgView)
             
             imgView.transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
             imgView.layer.anchorPoint = CGPoint.init(x: 0.5, y: 0.5)
@@ -44,39 +48,39 @@ class JLSwiper: UIScrollView, UIScrollViewDelegate {
                 currentIdx = 1
             }
         }
-        
+        self.setContentOffset(CGPoint(x: itemWidth, y: 0), animated: false)
 
+        return self
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        let index = Int( scrollView.contentOffset.x / (JLWidth-60) )
+        let index = Int( scrollView.contentOffset.x / itemWidth )
         if index == currentIdx {return}
-        //下标
+
         lastIdx = currentIdx
         currentIdx = index
-        //循环
-        let imagesCount = swiperDataSource?.swiperImages().count
+        
         if currentIdx == 0 {
-            scrollView.setContentOffset(CGPoint(x: (JLWidth-60)*CGFloat((swiperDataSource?.swiperImages().count)!-2), y: 0), animated: false)
-            self.imageViews[currentIdx!].transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
-            currentIdx = imagesCount!-2
-            lastIdx = imagesCount!-1
-        } else if currentIdx == imagesCount!-1 {
-            scrollView.setContentOffset(CGPoint(x: (JLWidth-60), y: 0), animated: false)
-            self.imageViews[currentIdx!].transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
+            scrollView.setContentOffset(CGPoint(x: itemWidth * CGFloat(images.count-2), y: 0), animated: false)
+            self.imageViews[1].transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
+            currentIdx = images.count-2
+            lastIdx = images.count-1
+        } else if currentIdx == images.count-1 {
+            scrollView.setContentOffset(CGPoint(x: itemWidth, y: 0), animated: false)
+            self.imageViews[images.count-2].transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
             currentIdx = 1
             lastIdx = 0
-        }
+        } 
         //
         UIView.animate(withDuration: 0.5, delay: 0.1) { [self] in
-            self.imageViews[currentIdx!].transform = CGAffineTransform.init(scaleX: 1, y: 1);
-            self.imageViews[lastIdx!].transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9);
+            self.imageViews[currentIdx].transform = CGAffineTransform.init(scaleX: 1, y: 1);
+            self.imageViews[lastIdx].transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9);
         }
     }
 }
 
-protocol JLSwiperDataSource {
+public protocol JLSwiperDataSource {
     
     ///swiper左右的间距
     var margin: CGFloat? { get set }
@@ -84,7 +88,7 @@ protocol JLSwiperDataSource {
     func swiperImages() -> [String]
 }
 
-protocol JLSwiperDelegate {
+public protocol JLSwiperDelegate {
     
     ///点击图片
     func didClickImage(at index: Int) -> Void

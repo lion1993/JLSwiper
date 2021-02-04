@@ -4,9 +4,9 @@ Pod::Spec.new do |spec|
 
   spec.name         = "JLSwiper"
 
-  spec.version      = "1.0.2"
+  spec.version      = "1.0.3"
 
-  spec.summary      = "JLSwiper."
+  spec.summary      = "JLSwiper"
 
   spec.description  = "A good swiper"
 
