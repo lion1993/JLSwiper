@@ -6,13 +6,13 @@ Pod::Spec.new do |spec|
 
   spec.version      = "1.0.0"
 
-  spec.summary      = "A short description of JLSwiper."
+  spec.summary      = "JLSwiper."
 
-  spec.description  = "swiper"
+  spec.description  = "A good swiper"
 
-  spec.homepage     = "http://github.com/lion1993/JLSwiper"
+  spec.homepage     = "https://github.com/lion1993/JLSwiper"
 
-  spec.license      = "MIT"
+  #spec.license      = "MIT"
 
   spec.author       = { "吕晶晶" => "1160861008@qq.com" }
 
